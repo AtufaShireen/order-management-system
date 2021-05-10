@@ -1,0 +1,99 @@
+{%extends 'salesrep/base.html'%}
+{%block css%}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+{%endblock%}
+{%block body%}
+{% if user.is_staff%}
+Add Items TO Inventory
+<p>
+
+    <a href="{%url 'salesrep:place_order' order_num%}">Goto Cart</a>
+</p>
+<table>
+    <tr>
+        <th>Category</th>
+
+        <th>Model Number</th>
+        <!-- <th>Available quantity</th> -->
+        <th>Add Quantity</th>
+        <th>Price</th>
+    </tr>
+    {%for item in inventories%}
+
+    <form method="POST" action=".">
+        {%csrf_token%}
+        <tr>
+            <td>
+                <p name="category">{{item.category}}</p>
+            </td>
+            <td>
+                <input type="text" name="modelnum" value="{{item.model_num}}">
+            </td>
+            <td>
+                <!-- <p name="avail">{{item.avail}}</p> -->
+                <input type="number" value=1 name="quantity">
+            </td>
+            <td>
+                <p name="price">{{item.price}}</p>
+            </td>
+            <td>
+                <button type="submit" class="">Add to cart</button>
+                <!-- <button type="button" class="check">Add to cart</button> -->
+            </td>
+        </tr>
+    </form>
+    {%endfor%}
+
+</table>
+
+{%endif%}
+{%endblock%}
+{%block js%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    url = "{%url 'salesrep:api_check_inventory'%}"
+    /*
+    $(document).ready(function () {
+        $(".check").click(function (e) {
+            quat=$(".check").closest("quantity").val() //access one element here
+            model=$(".check").closest("input[name='modelnum']").val() //access one element here
+            console.log(quat,model)
+            $.ajax({
+                url: url,
+                type: "GET",
+                data:{
+                    'model_num':model,
+                    'order_num':"{{order_num}}",
+                    'quantity':quat
+                },
+                success: function (data) {
+                    if (data.message) {
+                        console.log(data.message);
+                    }
+                },
+
+            });
+        });
+    });
+*/
+</script>
+
+{%endblock%}

@@ -1,0 +1,69 @@
+{%extends 'salesrep/base.html'%}
+{%block css%}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+{%endblock%}
+{%block body%}
+{% if user.is_staff%}
+
+<p>Order History</p>
+<a href="{%url 'salesrep:api_order_history'%}" class="report btn btn-primary">Generate Report</a>
+<table>
+    <tr>
+        <th>Order Number</th>
+        <!-- <th>num_orders</th> -->
+        <th>price</th>
+        <th>estimated_time</th>
+    </tr>
+    {%for order in orders%}
+    <tr>
+        <td>{{order.order_num}}</td>
+
+        <td>{{order.total_price}}</td>
+
+        <td>{{order.estimated_time}}</td>
+    </tr>
+    {%endfor%}
+</table>
+
+{%endif%}
+{%endblock%}
+{%block js%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    url = "{%url 'salesrep:api_order_history'%}"
+    /*
+    $(document).ready(function () {
+        $(".report").click(function (e) {
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (data) {
+                    console.log(data)
+                }
+            });
+
+
+        });
+    });
+
+*/
+</script>
+{%endblock%}

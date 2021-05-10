@@ -1,0 +1,166 @@
+{%extends 'salesrep/base.html'%}
+{%block css%}
+<style>
+    div[disabled] {
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    .form-row {
+        border-bottom: 2px solid orange;
+        border-top: 2px solid orange;
+        display: block;
+    }
+</style>
+{%endblock%}
+<p>
+    Place Order
+</p>
+{%load widget_tweaks%}
+{%block body%}
+Order Number: {{order_number}}
+<form method="POST">
+    {% csrf_token %}
+    {{ itemformset.management_form }}
+    {{ itemformset.hidden_fields }}
+
+    <ul>
+        {%for i in itemformset.non_form_errors%}
+        <li>{{i}}</li>
+        {%endfor%}
+    </ul>
+    {% for form in itemformset %}
+    {{form.id}}
+    <div class="form-row">
+        {{form.errors}}
+        <div class="row spacer">
+            <div class="col-2">
+
+                <label>{{form.item.label}}</label>
+            </div>
+            <div class="col-4">
+                <div class="input-group" disabled>
+                    {{form.item}}
+
+                </div>
+            </div>
+        </div>
+        <div class="row spacer">
+
+            <div class="col-2">
+                <label>{{form.quantity.label}}</label>
+            </div>
+            <div class="col-4">
+                <div class="input-group" disabled>
+                    {{form.quantity|add_class:'change_quantity'}}
+                </div>
+            </div>
+            <div class="col-2">
+                <label>{{form.price.label}}</label>
+            </div>
+            <div class="col-4">
+                <div class="input-group" disabled>
+                    {{form.price|add_class:"price_change"}}
+                </div>
+            </div>
+            <div class="col-2">
+                <label>{{form.DELETE.label}} Item</label>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    {{form.DELETE}}
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    {% endfor %}
+
+    </div>
+    {% for hidden in order_form.hidden_fields %}
+    {{ hidden }}
+    {% endfor %}
+    {%for i in order_form.non_field_errors%}
+    <li>{{i}}</li>
+    {%endfor%}
+    </ul>
+    {{order_form.errors}}
+
+    <div class="row spacer">
+        <div class="col-2">
+
+            <label>{{order_form.cust_name.label}}</label>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                {{order_form.cust_name}}
+
+            </div>
+        </div>
+    </div>
+    <div class="row spacer">
+        <div class="col-2">
+            <label>{{order_form.cust_add.label}}</label>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                {{order_form.cust_add}}
+            </div>
+        </div>
+
+    </div>
+    <div class="row spacer">
+        <div class="col-2">
+
+            <label>{{order_form.distance.label}} IN km(S)</label>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                {{order_form.distance}}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row spacer">
+        <div class="col-2">
+            <label>{{order_form.status.label}}</label>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                {{order_form.status}}
+            </div>
+        </div>
+    </div>
+    <div class="row spacer" style="margin: auto;">
+        <div class="">
+            <button type="submit" class="btn  btn-primary">Place Order</button>
+        </div>
+        <div class="">
+            <a href="#" class="btn del btn-primary">Delete Order</a>
+        </div>
+
+    </div>
+</form>
+
+{%endblock%}
+{%block js%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    url = "{%url 'salesrep:api_order' order_number%}"
+    $(document).ready(function () {
+        $(".del").click(function (e) {
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                success: function (result) {
+                    console.log(result.message);
+                },
+
+            });
+        });
+    });
+
+</script>
+{%endblock js%}

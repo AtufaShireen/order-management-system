@@ -1,0 +1,20 @@
+{%extends 'salesrep/base.html'%}
+{%block body%}
+<section class="login-panel">
+    <div class="left-side"></div>
+    <div class="right-side">
+        <h1>LogIn<br>
+        </h1>
+        <form method='post'>
+            {%csrf_token%}
+            {{form}}
+            <input type="submit" value="let's go" class="submit-btn">
+        </form>
+
+        <small class="text-muted">
+        </small>
+
+    </div>
+</section>
+
+{%endblock%}

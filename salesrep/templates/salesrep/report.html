@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <img src="https://essenvia.com/wp-content/uploads/2021/03/essenvia-logo-3x.png" width="60px" height='40px'>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+
+</head>
+
+<body>
+    <p>Order History</p>
+    <table>
+        <tr>
+            <th>Order Number</th>
+            <!-- <th>num_orders</th> -->
+            <th>price</th>
+            <th>estimated_time</th>
+        </tr>
+        {%for order in orders%}
+        <tr>
+            <td>{{order.order_num}}</td>
+
+            <td>{{order.total_price}}</td>
+
+            <td>{{order.estimated_time}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+
+</body>
+
+</html>
