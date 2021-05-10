@@ -39,3 +39,5 @@ api/add_order/ (AddOrderApi in Views.py)
 <br>api/check_status/(CheckStatusApi in views.py)
 <li>GET:  returns the status of the order.</li>
 <li>POST: (with order_num and status{Pending,WithDrawn,Rejected,Delivered}) updates the order status with a response of a message.</li>
+
+Doc Link:https://docs.google.com/document/d/1iX6u_8W2ZQWXtLkBY-HlIISP_TRXWKLWbOsWRd7yhq0/edit?usp=sharing
