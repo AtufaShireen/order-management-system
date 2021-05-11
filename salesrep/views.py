@@ -28,7 +28,7 @@ def place_order(request,order_num):
     order_inst=models.OrderIntake.objects.get(order_num=order_num)
     team=order_inst.team
     r_time=0
-    pend_q=models.OrderIntake.objects.filter(status='Pending',team=team).order_by('-created_time')
+    pend_q=models.OrderIntake.objects.filter(status='Pending',team=team).order_by('-created_time')[0]
     if pend_q is not None:
         for i in pend_q:
             # if i.estimated_time>datetime.now():
